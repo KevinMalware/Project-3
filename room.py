@@ -1,56 +1,132 @@
 class Room:
+    """
+    Represents a room in a text-based adventure game.
+    
+    Attributes:
+        desc (str): Short description of the room.
+        equippable (Item or None): The item available in the room, if any.
+        character (NPC or None): The character present in the room, if any.
+        neighbors (dict): Dictionary of neighboring rooms in different directions.
+    """
 
-    #we first use a constructor for room class with the attrributes being
-    #desc, which is the description but shortened, as well as equippable and character
     def __init__(self, desc, equippable=None, character=None):
+        """
+        Initializes a Room object with a description, optional item, and optional character.
+        
+        Args:
+            desc (str): Description of the room.
+            equippable (Item, optional): Item in the room. Defaults to None.
+            character (NPC, optional): Character in the room. Defaults to None.
+        """
         self.desc = desc
         self.equippable = equippable
         self.character = character
         self.neighbors = {}
 
-    #we use a getter method to get the description, item, and npc if there is a
-    #item or npc
     def get_description(self):
+        """
+        Returns the description of the room.
+        
+        Returns:
+            str: The description of the room.
+        """
         return self.desc
 
     def get_item(self):
+        """
+        Returns the item in the room, if any.
+        
+        Returns:
+            Item or None: The item present in the room.
+        """
         return self.equippable
 
     def get_npc(self):
+        """
+        Returns the character in the room, if any.
+        
+        Returns:
+            NPC or None: The character present in the room.
+        """
         return self.character
 
-    #we use a setter method to update the item and npc
     def set_item(self, equippable):
+        """
+        Sets the item present in the room.
+        
+        Args:
+            equippable (Item): The item to place in the room.
+        """
         self.equippable = equippable
 
     def set_npc(self, npc):
+        """
+        Sets the character present in the room.
+        
+        Args:
+            npc (NPC): The character to place in the room.
+        """
         self.character = npc
 
-    #we use a add method to add a neighbor in the given direction
-    #which will be always south
     def add_neighbor(self, direction, room):
+        """
+        Adds a neighboring room in a specified direction.
+        
+        Args:
+            direction (str): Direction of the neighboring room (e.g., 'south').
+            room (Room): The neighboring room to add.
+        """
         self.neighbors[direction] = room
 
-    #we get the neighbor function
     def get_neighbor(self, direction):
+        """
+        Returns the neighboring room in the given direction, if any.
+        
+        Args:
+            direction (str): The direction to check for a neighboring room.
+        
+        Returns:
+            Room or None: The neighboring room if it exists, otherwise None.
+        """
         return self.neighbors.get(direction, None)
 
-    #we check if there is a item has a item or npc in the following 2 methods
     def has_item(self):
+        """
+        Checks if the room has an item.
+        
+        Returns:
+            bool: True if the room has an item, False otherwise.
+        """
         return self.equippable is not None
 
     def has_npc(self):
+        """
+        Checks if the room has a character.
+        
+        Returns:
+            bool: True if the room has a character, False otherwise.
+        """
         return self.character is not None
 
-    #this method removes an item from the room, then is returned
     def remove_item(self):
+        """
+        Removes and returns the item from the room.
+        
+        Returns:
+            Item or None: The removed item if it existed, otherwise None.
+        """
         item = self.equippable
         self.equippable = None
         return item
 
-    #this string function checks if there is an item, it is added to the description
-    #it also checks if there is a character, it gets added to the description as well
     def __str__(self):
+        """
+        Returns a string representation of the room, including its description,
+        item, and character (if present).
+        
+        Returns:
+            str: The string description of the room.
+        """
         description = f"You are {self.desc}."
         if self.equippable:
             description += f"\nYou see {self.equippable}."
